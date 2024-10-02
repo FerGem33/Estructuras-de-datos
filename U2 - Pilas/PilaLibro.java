@@ -1,5 +1,7 @@
 // Clase instanciable para manejar una Pila de números enteros
 
+import javax.swing.JOptionPane;
+
 public class PilaLibro{
     // atributos  
      private Libro p[ ];     // vector para guardar datos de la pila
@@ -67,6 +69,32 @@ public class PilaLibro{
    // devuelve el número de elementos que hay actualmente en la pila
    public int size ( )  {
       return tope + 1;
+   }
+
+   public void mostrarTope(){
+      if(!isEmpty()){
+         String s = "Título: " + p[tope].getTitulo() + "\nAutor: " + p[tope].getAutor();
+      JOptionPane.showMessageDialog(null, s);
+      }
+   }
+   public void incrementarPorcentaje(int porcentaje){
+      for(int i=0; i<size(); i++){
+         p[i].setPrecio(p[i].getPrecio() + p[i].getPrecio() * porcentaje / 100);
+      }
+   }
+   public void vaciar(){
+      StringBuilder s = new StringBuilder("Libros eliminados:\n");
+      while(!isEmpty()){
+         s.append(pop().getTitulo()).append("\n");           
+      }
+      JOptionPane.showMessageDialog(null, s);
+   }
+   public float sumaPrecios(){
+      float suma = 0;
+      for(int i=0; i<size(); i++){
+         suma += p[i].getPrecio();
+      }
+      return suma;
    }
 
    public String toString ( ) {

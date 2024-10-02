@@ -3,7 +3,6 @@ import java.text.DecimalFormat;
 public class Libro {
     private String titulo, autor;
     private float precio;
-    DecimalFormat df = new DecimalFormat("$#.00");
 
     public Libro(){
         titulo = autor = "";
@@ -33,6 +32,7 @@ public class Libro {
         this.precio = precio;
     }
     public String toString(){
+        DecimalFormat df = new DecimalFormat("$#.00");
         return "Titulo: " + titulo +"\nAutor: " + autor + "\nPrecio: " + df.format(precio);
     }
 }
