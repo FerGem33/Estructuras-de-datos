@@ -1,41 +1,41 @@
 import javax.swing.JOptionPane;
 
 public class U2Practica3 {
-    static PilaLibro historia = new PilaLibro(), novela = new PilaLibro(7);
+    static PilaLibro historia = new PilaLibro();  // stack of historical books
+    static PilaLibro novela = new PilaLibro(7);  // stack of novels with size 7
 
-    public static void insertar(float precio, PilaLibro pila, String nombre){
-        if(!pila.isFull()){
+    public static void insertar(float precio, PilaLibro pila, String nombre) {
+        if (!pila.isFull()) {
             String titulo = JOptionPane.showInputDialog("Titulo: ");
-                String autor = JOptionPane.showInputDialog("Autor: ");
-                pila.push(new Libro(titulo, autor, precio));
-        } else{
+            String autor = JOptionPane.showInputDialog("Autor: ");
+            pila.push(new Libro(titulo, autor, precio));
+        } else {
             JOptionPane.showMessageDialog(null, "La pila de " + nombre + " ya está llena!");
         }
     }
 
-    public static void insertarLibro(){
+    public static void insertarLibro() {
         float precio = Float.parseFloat(JOptionPane.showInputDialog("Precio: "));
-        if(precio < 300){
+        if (precio < 300) {
             insertar(precio, novela, "novelas");
-        } else{
+        } else {
             insertar(precio, historia, "historias");
         }
     }
 
-    public static void eliminarLibro(PilaLibro pila, String nombre){
-        if(!pila.isEmpty()){
+    public static void eliminarLibro(PilaLibro pila, String nombre) {
+        if (!pila.isEmpty()) {
             String titulo = pila.pop().getTitulo();
-            JOptionPane.showMessageDialog(null, "Se elimino a: " + titulo);
-        } else{
+            JOptionPane.showMessageDialog(null, "Se eliminó a: " + titulo);
+        } else {
             JOptionPane.showMessageDialog(null, "No hay libros de " + nombre + " por eliminar!");
         }
     }
 
-    public static void mostrarPila(PilaLibro pila, String nombre){
+    public static void mostrarPila(PilaLibro pila, String nombre) {
         String s = "Libros en " + nombre + ":\n" + pila.toString();
         JOptionPane.showMessageDialog(null, s);
     }
-
     public static void main(String[] args) {
 
         String menu = """
@@ -44,35 +44,35 @@ public class U2Practica3 {
                 3.  Eliminar un libro de novela
                 4.  Mostrar libros de historia
                 5.  Mostrar libros de novela
-                6.  Libro de historia en tope
-                7.  Aumentar precio de todos los libros
-                8.  Vaciar pila de novelas
-                9.  Precio total de libros
+                6.  Mostrar libro de historia en el tope
+                7.  Aumentar el precio de todos los libros
+                8.  Vaciar la pila de novelas
+                9.  Precio total de los libros
                 10. Terminar
                 """;
 
         int opc;
-        do{
+        do {
             opc = Integer.parseInt(JOptionPane.showInputDialog(menu));
 
-            switch(opc){
-                case 1:{
+            switch (opc) {
+                case 1: {
                     insertarLibro();
                     break;
                 }
-                case 2:{
+                case 2: {
                     eliminarLibro(historia, "historia");
                     break;
                 }
-                case 3:{
+                case 3: {
                     eliminarLibro(novela, "novela");
                     break;
                 }
-                case 4:{
+                case 4: {
                     mostrarPila(historia, "historia");
                     break;
                 }
-                case 5:{
+                case 5: {
                     mostrarPila(novela, "novela");
                     break;
                 }
@@ -86,8 +86,8 @@ public class U2Practica3 {
                 }
                 case 7:{
                     int x = Integer.parseInt(JOptionPane.showInputDialog("Porcentaje a incrementar: "));
-                    historia.incrementarPorcentaje(x);
-                    novela.incrementarPorcentaje(x);
+                    historia.aumentarPorcentaje(x);
+                    novela.aumentarPorcentaje(x);
                     break;
                 }
                 case 8:{
@@ -99,18 +99,19 @@ public class U2Practica3 {
                     break;
                 }
                 case 9:{
-                    float suma = historia.sumaPrecios() + novela.sumaPrecios();
-                    JOptionPane.showMessageDialog(null, "La suma total de los precios es: " + suma);
+                    float total = historia.sumaPrecios() + novela.sumaPrecios();
+                    JOptionPane.showMessageDialog(null, "El precio total de los libros es: $" + total);
                     break;
                 }
-                case 10:{
+                case 10: {
+                    JOptionPane.showMessageDialog(null, "Saliendo del programa.");
                     break;
                 }
-                default:{
+                default: {
                     JOptionPane.showMessageDialog(null, "Opción no válida!");
                     break;
                 }
             }
-        } while(opc != 10);
+        } while (opc != 10);
     }
 }

@@ -77,7 +77,7 @@ public class PilaLibro{
       JOptionPane.showMessageDialog(null, s);
       }
    }
-   public void incrementarPorcentaje(int porcentaje){
+   public void aumentarPorcentaje(int porcentaje){
       for(int i=0; i<size(); i++){
          p[i].setPrecio(p[i].getPrecio() + p[i].getPrecio() * porcentaje / 100);
       }
