@@ -42,12 +42,13 @@ public class ListaAutos {
             NodoAuto i = inicio, j = i.getNext();
             
             if (j == null){
-                if(comparador.compare(nodo.getPropietario(), i.getPropietario()) < 0){
-                    insertaInicio(nodo);
-                } else{
+                if(comparador.compare(nodo.getPropietario(), i.getPropietario()) >= 0){
                     i.setNext(nodo);
                 }
             } else{
+                if(comparador.compare(nodo.getPropietario(), i.getPropietario()) < 0){
+                    insertaInicio(nodo);
+                }
                 do{
                     if(comparador.compare(nodo.getPropietario(), i.getPropietario()) >= 0
                         &&  comparador.compare(nodo.getPropietario(), j.getPropietario()) < 0){
@@ -62,6 +63,33 @@ public class ListaAutos {
             }    
         }
     }
+    public NodoAuto eliminaPrimero(){
+        NodoAuto borrado = inicio;
+        if(!listaVacia()){
+            inicio = inicio.getNext();
+            borrado.setNext(null);
+        }
+        return borrado;
+    }
+    public NodoAuto eliminaUltimo(){
+        if(listaVacia()){
+            return null;
+        }
+
+        NodoAuto p = inicio;
+        if(p.getNext() == null){
+            inicio = null;
+            return p;
+        }
+
+        NodoAuto u = p.getNext();
+        do{
+            p = u;
+            u = u.getNext();
+        } while(u.getNext() != null);
+        p.setNext(null);
+        return u;
+    }
     public NodoAuto buscarPlaca(String placa){
         if(!listaVacia()){
             NodoAuto i = inicio;
@@ -73,6 +101,26 @@ public class ListaAutos {
                 i = i.getNext();
             } while(i != null);
         }
+        return null;
+    }
+    public NodoAuto eliminarPorPlaca(String placa){
+        if(listaVacia()) return null;
+        NodoAuto i = inicio, j = i.getNext();
+
+        if(placa.compareToIgnoreCase(i.getPlaca()) == 0){
+            inicio = j;
+            i.setNext(null);
+            return i;
+        }
+        do{
+            if(placa.compareToIgnoreCase(j.getPlaca()) == 0){
+                i.setNext(j.getNext());
+                j.setNext(null);
+                return j;
+            }
+           i = j;
+           j = j.getNext();
+        } while(j.getNext() != null);
         return null;
     }
     public NodoAuto buscarPropietario(String propietario){
