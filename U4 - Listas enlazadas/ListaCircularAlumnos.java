@@ -31,44 +31,71 @@ public class ListaCircularAlumnos {
         return inicio == null;
     }
 
-    public void insertaAlfabetiamente(NodoAlumno nodo){
+    public void insertarAlfabeticamente(NodoAlumno nodo){
         if(listaVacia()){
+            // Si la lista está vacía...
             inicio = nodo;
             nodo.setNext(inicio);
+            System.out.println("0");
         } else{
             Locale es = Locale.of("es");
-            Collator comparador = Collator.getInstance(es);
-            comparador.setStrength(Collator.PRIMARY);
+            Collator collator = Collator.getInstance(es);
+            collator.setStrength(Collator.PRIMARY);
+            String nombre = nodo.getAlumno().getNombre();
 
-            NodoAlumno i = inicio, j = i.getNext();
+            NodoAlumno i, j;
+            i = inicio;
+            j = i.getNext();
 
-            if (j == inicio){
-                // Insertar después de inicio ( si inicio es el único nodo)
-                if(comparador.compare(nodo.getAlumno().getNombre(), i.getAlumno().getNombre()) >= 0){
-                    nodo.setNext(i.getNext());
+            if(i == j){
+                // Si la lista tiene un único nodo...
+                if(collator.compare(nombre, i.getAlumno().getNombre())  <= 0){
+                    // Si nodo <= inicio
+                    nodo.setNext(i);
                     i.setNext(nodo);
+                    inicio = nodo;
+                    System.out.println("1");
+                } else{
+                    // Si inicio < nodo
+                    inicio.setNext(nodo);
+                    nodo.setNext(inicio);
+                    System.out.println("2");
                 }
             } else{
-                // Insertar al inicio
-                if(comparador.compare(nodo.getAlumno().getNombre(), i.getAlumno().getNombre()) < 0){
-                    nodo.setNext(inicio);
-                    inicio = nodo;
-                }
-                do{
-                    // Insertar entre i y j
-                    if(comparador.compare(nodo.getAlumno().getNombre(), i.getAlumno().getNombre()) >= 0
-                            &&  comparador.compare(nodo.getAlumno().getNombre(), j.getAlumno().getNombre()) < 0){
-                        nodo.setNext(j);
-                        i.setNext(nodo);
-                        return;
-                    }
-                    i = j;
-                    j = j.getNext();
-                } while(j != inicio);
+                // Si la lista tiene múltiples nodos...
 
-                // Insertar al final
-                nodo.setNext(inicio);
-                i.setNext(nodo);
+                if (collator.compare(nombre, i.getAlumno().getNombre()) <= 0) {
+                    // Si nodo <= inicio
+                    nodo.setNext(i);
+
+                    fin = i;
+                    while (fin.getNext() != inicio) {
+                        fin = fin.getNext();
+                    }
+                    fin.setNext(nodo);
+
+                    inicio = nodo;
+                    System.out.println("3");
+                }
+                else {
+                    do {
+                        if (collator.compare(nombre, i.getAlumno().getNombre()) >= 0
+                                && collator.compare(nombre, j.getAlumno().getNombre()) <= 0) {
+                            // Si i < nodo < j ...
+                            nodo.setNext(j);
+                            i.setNext(nodo);
+                            System.out.println("4");
+                            return;
+                        }
+
+                        i = j;
+                        j = j.getNext();
+                    } while (j != inicio);
+                    // Si fin < n ...
+                    i.setNext(nodo);
+                    nodo.setNext(inicio);
+                    System.out.println("5");
+                }
             }
         }
     }
@@ -111,11 +138,10 @@ public class ListaCircularAlumnos {
 
         if(!listaVacia()){
             do {
-                s.append(i).append("\n");
+                s.append(i).append("\n------------------\n");
                 i = i.getNext();
             } while (i != inicio);
         }
-
         return s.toString();
     }
 }

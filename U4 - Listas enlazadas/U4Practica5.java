@@ -57,7 +57,7 @@ public class U4Practica5 {
         float x;
         while(true) {
             try{
-                x = Integer.parseInt(JOptionPane.showInputDialog(message));
+                x = Float.parseFloat(JOptionPane.showInputDialog(message));
                 return x;
             } catch(NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Debe ingresar un número!");
@@ -72,7 +72,7 @@ public class U4Practica5 {
         for(int i = 0; i < calif.length; i++) {
             calif[i] = readFloat("Calificación " + (i+1) +":");
         }
-        grupoA.insertaAlfabetiamente(new NodoAlumno(new Alumno(numControl, nombre, calif)));
+        grupoA.insertarAlfabeticamente(new NodoAlumno(new Alumno(numControl, nombre, calif)));
     }
 
     public static boolean vacio(){
